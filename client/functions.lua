@@ -7,7 +7,7 @@ local function returnTable()
 end 
 
 -- Function: Nearest Coords to a single Point, with Z
-function YRK.nearestCoordsToSinglePoint(coords, optDefaultDistance, FunctionToCall)
+function YRK.nearestCoordsToSinglePoint(coords, optDefaultDistance, shouldDraw, FunctionToCall)
     if type(coords) == 'vector3' then 
         local ped = PlayerPedId()
         local playerCoords = GetEntityCoords(ped)
@@ -49,24 +49,26 @@ function YRK.nearestCoordsToSinglePoint(coords, optDefaultDistance, FunctionToCa
 
                     if distance <= distanceMid then 
                         idle = 1500
-                        local _, groundz = GetGroundZAndNormalFor_3dCoord(coords.x, coords.y, coords.z)
-                        DrawMarker(
-                            27, -- Circle
-                            coords.x,
-                            coords.y,
-                            groundz,
-                            0, 0, 0, -- Direction
-                            0, 0, 0, -- Rotation
-                            0.1, 0.1, 0.1, -- Scale
-                            255, 255, 255, 250, -- RGBA
-                            false,
-                            false,
-                            2,
-                            false,
-                            false,
-                            false,
-                            false
-                        )
+                        if shouldDraw then 
+                            local _, groundz = GetGroundZAndNormalFor_3dCoord(coords.x, coords.y, coords.z)
+                            DrawMarker(
+                                27, -- Circle
+                                coords.x,
+                                coords.y,
+                                groundz,
+                                0, 0, 0, -- Direction
+                                0, 0, 0, -- Rotation
+                                0.1, 0.1, 0.1, -- Scale
+                                255, 255, 255, 250, -- RGBA
+                                false,
+                                false,
+                                2,
+                                false,
+                                false,
+                                false,
+                                false
+                            )
+                        end
                     end 
                     if distance <= distanceNear then 
                         idle = 1 
@@ -225,7 +227,7 @@ end
 -- Example:
 -- Citizen.CreateThread(function()
 --     while true do 
---         local main = YRK.nearestCoordsToSinglePoint(vec3(-1746.09, 32.16, 67.39), 100,
+--         local main = YRK.nearestCoordsToSinglePoint(vec3(-1746.09, 32.16, 67.39), 100, false,
 --         function()
 --             if IsControlJustPressed(0, 38) then 
 --                 print('You pressed E')
