@@ -1,6 +1,6 @@
 local YRK = {}
 local globalIdle = 500 
-local defaultIdle = 20000
+local defaultIdle = 15000
 
 local function returnTable()
     return YRK
